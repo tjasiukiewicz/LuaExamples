@@ -1,0 +1,16 @@
+
+Liczba palindromiczna:
+ 1234321 - to jest liczba palindromiczna
+ 1410 - to nie jest liczba palindromiczna
+
+Dodawanie palindromiczne:
+ 1) liczbę odwracamy ( 1234 -> 4321)
+ 2) dodajemy do pierwotnej odwróconą (1234 + 4321 = 5555)
+Po ilu krokach dla liczby w wyniku otrzymamy palindromiczną?
+
+Policzyć dla zakresu [10, 100]
+Wyniki
+10: 1, 11
+...
+...
+100: 1, 101
