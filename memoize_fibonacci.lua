@@ -1,17 +1,24 @@
 function memoize(func)
 	local cache = {}
-	return function(n)
-		if cache[n] then
+	return function(...)
+		local key = table.concat({...}, ',')
+		if cache[key] then
 			--print("cache HIT!")
-			return cache[n]
+			return cache[key]
 		else
 			--print("cache MISS!")
-			local result = func(n)
-			cache[n] = result
+			local result = func(...)
+			cache[key] = result
 			return result
 		end
 
 	end
+end
+
+function add(a, b)
+	-- expensive add :)
+	os.execute("sleep 3")
+	return a + b
 end
 
 
@@ -24,5 +31,11 @@ function fibonacci(n)
 end
 
 fibonacci = memoize(fibonacci)
+add = memoize(add)
 
 print(fibonacci(42))
+print(fibonacci(42))
+print("first run")
+print(add(2, 4))
+print("second run")
+print(add(2, 4))
