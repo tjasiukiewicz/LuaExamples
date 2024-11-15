@@ -1,3 +1,5 @@
+#!/usr/bin/env lua5.4
+
 function dividers(n)
 	local divs = {}
 	for i = 1, ((n + 1) // 2) do
@@ -8,24 +10,42 @@ function dividers(n)
 	return divs
 end
 
-function table_sum(tbl)
-	local sum = 0
+-- generyczna funkcja redukcji.
+-- w przypadku braku podanej funkcji, liczy sumę
+-- indent to argument "obojętny". domyślnie 0
+-- podawać dla np.:
+--     dla sumy: 0
+--     dla mnożenia: 1
+--     dla max: wartość_minimalna
+--     dla min: wartość maksymalna
+--     ...
+function reduce_table(tbl, func, indent)
+	local indent = indent or 0
+	local result = indent
+	local func = func or function(a, b) return a + b end
 	for _, v in pairs(tbl) do
-		sum = sum + v
+		result = func(result, v)
 	end
-	return sum
+	return result
 end
 
 function is_perfect_num(n)
-	return table_sum(dividers(n)) == n
+	return reduce_table(dividers(n)) == n
 end
 
-function print_perfect_range(minval, maxval) 
-	for i = minval, maxval do
-		if is_perfect_num(i) then
-			print(i)
+function perfect_in_range(minval, maxval) 
+	local current_i = minval
+	return function() 
+		--if current_i > maxval then return nil end
+		for idx = current_i, maxval, 1 do
+			if is_perfect_num(idx) then
+				current_i = current_i + 1
+				return idx
+			end
 		end
 	end
 end
 
-print_perfect_range(2, 10000)
+for v in perfect_in_range(2, 10000) do
+	print(v)
+end
