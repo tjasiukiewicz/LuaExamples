@@ -1,0 +1,14 @@
+Napisz funkcję która przy przekazanym argumencie nieparzystym, wydrukuje piramidkę ze znaków '*'.
+
+n = 3
+
+ *
+***
+
+n = 5
+
+  *
+ ***
+*****
+
+Do wyświetlenia znaków użyj string.rep('*', 5)
