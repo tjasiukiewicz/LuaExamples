@@ -34,16 +34,20 @@ function is_perfect_num(n)
 end
 
 function perfect_in_range(minval, maxval) 
-	local current_i = minval
-	return function() 
-		--if current_i > maxval then return nil end
-		for idx = current_i, maxval, 1 do
-			if is_perfect_num(idx) then
-				current_i = current_i + 1
-				return idx
+	local i = minval > 2 and minval or 2
+	return coroutine.wrap(function()
+		while true do
+			if is_perfect_num(i) then
+				coroutine.yield(i)
+			end
+			if i <= maxval then 
+				i = i + 1
+			else
+				break
 			end
 		end
 	end
+	)
 end
 
 for v in perfect_in_range(2, 10000) do
